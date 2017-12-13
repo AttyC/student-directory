@@ -1,7 +1,7 @@
 @students = []
 @filename
 @name
-@@cohort
+@cohort
 @months = [:january, :february, :march, :april, :may, :june, 
   :july, :august, :september, :october, :november, :december]
 #Let's put all the @students into an array
@@ -38,8 +38,8 @@ def print_menu
   menu_items = [
     "1. Input the students", 
     "2. Show the students", 
-    "3. Save the list to students.csv", 
-    "4. Load the list from students.csv",
+    "3. Save the list to file", 
+    "4. Load the list from file",
     "9. Exit" ]
   # 1. Print the menu and ask the user what to do
   menu_items.map {|m| puts m}
@@ -51,7 +51,8 @@ end
 
 def print_students_list
   @months.each do |month|
-    @students.map { |student| puts "#{student[:name]},  #{student[:cohort].to_s.capitalize} cohort".center(20) if student[:cohort].to_s.capitalize.include?(month.to_s)}
+    @students.map { |student| 
+    puts "#{student[:name]},  #{student[:cohort].to_s} cohort".center(20) if student[:cohort].to_s.include?(month.to_s)}
   end
 end
 
@@ -106,24 +107,24 @@ def interactive_menu
 end 
 
 def save_students(filename)
-  #open file for writing
-  file = File.open(@filename, "w")
-  #iterate over the array of students
+  file = File.open(@filename, "w") { |file| 
+   #iterate over the array of students
   @students.each do |student|
-    student_data = [student[:@name], student[:@cohort]]
+    student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
-  file.close
+ }
+
 end
 
 def load_students(filename = "students.csv")
-  file = File.open(@filename, "r")
+  file = File.open(@filename, "r") { |file|
   file.readlines.each do |line|
     @name, @cohort = line.chomp.split(",")
     students_to_array(@name, @cohort)
   end
-  file.close
+  }
 end
 
 def try_load_students(filename = "students.csv")
@@ -146,5 +147,4 @@ try_load_students
 interactive_menu
 
 @students = input_students
-
 
