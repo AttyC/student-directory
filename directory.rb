@@ -1,3 +1,4 @@
+require 'csv'
 @students = []
 @filename
 @name
@@ -126,6 +127,26 @@ def load_students(filename = "students.csv")
   end
   }
 end
+
+
+# def load_students(filename = "students.csv")
+  
+#   CSV.foreach('students.csv') do |row|
+#     #puts row.inspect
+#     @name, @cohort = row.split(",")
+#     students_to_array(@name, @cohort)
+#   end
+# end
+
+  # CSV.read(filename, "r") do |row|
+  #   # csv << ["row", "of", "CSV", "data"]
+  #   # csv << ["another", "row"]
+  #   # file.readlines.each do |line|
+  #     @name, @cohort = row.chomp.split(",")
+  #     students_to_array(@name, @cohort)
+      
+  # # end
+
 
 def try_load_students(filename = "students.csv")
   puts "Loading #{@filename}..."
